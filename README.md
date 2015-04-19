@@ -1,4 +1,4 @@
-# Sliding Menu with much more feature.
+# SlidingMenu with much more feature.
 
 refer to https://github.com/jfeinstein10/SlidingMenu
 
