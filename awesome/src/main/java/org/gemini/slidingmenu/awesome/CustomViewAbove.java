@@ -94,6 +94,8 @@ public class CustomViewAbove extends ViewGroup {
 	private OnClosedListener mClosedListener;
 	private OnOpenedListener mOpenedListener;
 
+	private SlidingMenu.CanvasTransformer mTransformer;
+
 	private List<View> mIgnoredViews = new ArrayList<View>();
 
 	//	private int mScrollState = SCROLL_STATE_IDLE;
@@ -145,6 +147,8 @@ public class CustomViewAbove extends ViewGroup {
 
 	}
 
+
+
 	public CustomViewAbove(Context context) {
 		this(context, null);
 	}
@@ -152,6 +156,10 @@ public class CustomViewAbove extends ViewGroup {
 	public CustomViewAbove(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initCustomViewAbove();
+	}
+
+	public void setCanvasTransformer(SlidingMenu.CanvasTransformer t) {
+		mTransformer = t;
 	}
 
 	void initCustomViewAbove() {
@@ -799,6 +807,8 @@ public class CustomViewAbove extends ViewGroup {
 		mScrollX = x;
 		mViewBehind.scrollBehindTo(mContent, x, y);	
 		((SlidingMenu)getParent()).manageLayers(getPercentOpen());
+		if (mTransformer != null)
+			invalidate();
 	}
 
 	private int determineTargetPage(float pageOffset, int velocity, int deltaX) {
@@ -821,7 +831,14 @@ public class CustomViewAbove extends ViewGroup {
 
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
-		super.dispatchDraw(canvas);
+		if (mTransformer != null) {
+			canvas.save();
+			mTransformer.transformCanvas(canvas, this.getPercentOpen());
+			super.dispatchDraw(canvas);
+			canvas.restore();
+		} else {
+			super.dispatchDraw(canvas);
+		}
 		// Draw the margin drawable if needed.
 		mViewBehind.drawShadow(mContent, canvas);
 		mViewBehind.drawFade(mContent, canvas, getPercentOpen());
