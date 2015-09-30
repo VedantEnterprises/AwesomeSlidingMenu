@@ -243,21 +243,21 @@ public class SlidingMenu extends RelativeLayout {
 		} else {
 			setMenu(new FrameLayout(context));
 		}
-		int touchModeAbove = ta.getInt(R.styleable.SlidingMenu_touchModeAbove, TOUCHMODE_MARGIN);
-		setTouchModeAbove(touchModeAbove);
-		int touchModeBehind = ta.getInt(R.styleable.SlidingMenu_touchModeBehind, TOUCHMODE_MARGIN);
-		setTouchModeBehind(touchModeBehind);
 
+		int touchModeAbove = ta.getInt(R.styleable.SlidingMenu_touchModeAbove, TOUCHMODE_MARGIN);
+		int touchModeBehind = ta.getInt(R.styleable.SlidingMenu_touchModeBehind, TOUCHMODE_MARGIN);
 		int offsetBehind = (int) ta.getDimension(R.styleable.SlidingMenu_behindOffset, -1);
 		int widthBehind = (int) ta.getDimension(R.styleable.SlidingMenu_behindWidth, -1);
-		if (offsetBehind != -1 && widthBehind != -1)
+		if (offsetBehind != -1 && widthBehind != -1) {
 			throw new IllegalStateException("Cannot set both behindOffset and behindWidth for a SlidingMenu");
-		else if (offsetBehind != -1)
+		} else if (offsetBehind != -1) {
 			setBehindOffset(offsetBehind);
-		else if (widthBehind != -1)
+		} else if (widthBehind != -1) {
 			setBehindWidth(widthBehind);
-		else
+		} else {
 			setBehindOffset(0);
+		}
+
 		float scrollOffsetBehind = ta.getFloat(R.styleable.SlidingMenu_behindScrollScale, 0.33f);
 		setBehindScrollScale(scrollOffsetBehind);
 		int shadowRes = ta.getResourceId(R.styleable.SlidingMenu_shadowDrawable, -1);
@@ -265,16 +265,20 @@ public class SlidingMenu extends RelativeLayout {
 			setShadowDrawable(shadowRes);
 		}
 		int shadowWidth = (int) ta.getDimension(R.styleable.SlidingMenu_shadowWidth, 0);
-		setShadowWidth(shadowWidth);
 		boolean fadeEnabled = ta.getBoolean(R.styleable.SlidingMenu_fadeEnabled, true);
-		setFadeEnabled(fadeEnabled);
-		float fadeDeg = ta.getFloat(R.styleable.SlidingMenu_fadeDegree, 0.33f);
-		setFadeDegree(fadeDeg);
-		boolean selectorEnabled = ta.getBoolean(R.styleable.SlidingMenu_selectorEnabled, false);
-		setSelectorEnabled(selectorEnabled);
-		int selectorRes = ta.getResourceId(R.styleable.SlidingMenu_selectorDrawable, -1);
-		if (selectorRes != -1)
-			setSelectorDrawable(selectorRes);
+        float fadeDeg = ta.getFloat(R.styleable.SlidingMenu_fadeDegree, 0.33f);
+        boolean selectorEnabled = ta.getBoolean(R.styleable.SlidingMenu_selectorEnabled, false);
+        int selectorRes = ta.getResourceId(R.styleable.SlidingMenu_selectorDrawable, -1);
+
+        setTouchModeAbove(touchModeAbove);
+        setTouchModeBehind(touchModeBehind);
+        setShadowWidth(shadowWidth);
+        setFadeEnabled(fadeEnabled);
+        setFadeDegree(fadeDeg);
+        setSelectorEnabled(selectorEnabled);
+		if (selectorRes != -1) {
+            setSelectorDrawable(selectorRes);
+        }
 		ta.recycle();
 	}
 
